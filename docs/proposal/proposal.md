@@ -1,10 +1,5 @@
 # School of Computing &mdash; Year 4 Project Proposal Form
 
-> Edit (then commit and push) this document to complete your proposal form.
-> Make use of figures / diagrams where appropriate.
->
-> Do not rename this file.
-
 ## SECTION A
 
 |                     |                   |
@@ -12,8 +7,8 @@
 |Project Title:       | IOT Smart Garden  |
 |Student 1 Name:      | Jacob Byrne       |
 |Student 1 ID:        | 15492172          |
-|Student 2 Name:      | xxxxxx            |
-|Student 2 ID:        | xxxxxx            |
+|Student 2 Name:      | Daniel Pereira    |
+|Student 2 ID:        |                   |
 |Project Supervisor:  | xxxxxx            |
 
 > Ensure that the Supervisor formally agrees to supervise your project; this is only recognised once the
@@ -34,7 +29,10 @@
 ### Introduction
 
 > Describe the general area covered by the project.
+
 Our idea for our Final Year Project is to create a Smart Garden. This will allow us to create an environment for plants to grow without any need to look after them.
+Users will have the option to take full control at any time or leave the garden as is without any input as the garden will maintain as ideal conditions as possible for the plant to survive. 
+
 
 ### Outline
 
@@ -43,7 +41,9 @@ Our idea for our Final Year Project is to create a Smart Garden. This will allow
 ### Background
 
 > Where did the ideas come from?
-> 
+
+We had the idea over our INTRA placement. The idea came from a project seen during work experience and noting that a house plant had died during the summer when we were away. 
+The idea came to us as we wanted a way to be able to be away from home for extended periods of time and not need to worry about house plants. 
 
 ### Achievements
 
@@ -56,6 +56,7 @@ Our idea for our Final Year Project is to create a Smart Garden. This will allow
 ### Programming language(s)
 
 > List the proposed language(s) to be used.
+
 1. Python 
 2. Javascript 
 3. Bash 
@@ -63,8 +64,10 @@ Our idea for our Final Year Project is to create a Smart Garden. This will allow
 ### Programming tools / Tech stack
 
 > Describe the compiler, database, web server, etc., and any other software tools you plan to use.
-> We are hoping to use the following to implement our project. 
-1. AWS EC2 for server 
+
+We are hoping to use the following to implement our project. 
+1. AWS EC2 for server running nginx with a custom-built UI to interface with the Smart Garden
+2. Python to implement backend and aws greengrass to communicate with raspberry pi
 
 ### Hardware
 > Describe any non-standard hardware components which will be required.
@@ -78,6 +81,8 @@ Our idea for our Final Year Project is to create a Smart Garden. This will allow
 
 > List the main new things (technologies, languages, tools, etc) that you will have to learn.
 
+1. Working with IOT 
+2. Integrating project dashboard with IOT devices (sensors, pi etc.)
 
 ### Breakdown of work
 
@@ -101,7 +106,7 @@ Our idea for our Final Year Project is to create a Smart Garden. This will allow
 
 <!-- Basically, just use HTML! -->
 
-<p align="center">
-  <img src="./res/cat.png" width="300px">
-</p>
+<!--<p align="center">-->
+<!--  <img src="./res/cat.png" width="300px">-->
+<!--</p>-->
 
