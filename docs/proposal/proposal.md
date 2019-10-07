@@ -9,9 +9,9 @@
 
 |                     |                   |
 |---------------------|-------------------|
-|Project Title:       | xxxxxx            |
-|Student 1 Name:      | xxxxxx            |
-|Student 1 ID:        | xxxxxx            |
+|Project Title:       | IOT Smart Garden  |
+|Student 1 Name:      | Jacob Byrne       |
+|Student 1 ID:        | 15492172          |
 |Student 2 Name:      | xxxxxx            |
 |Student 2 ID:        | xxxxxx            |
 |Project Supervisor:  | xxxxxx            |
@@ -34,6 +34,7 @@
 ### Introduction
 
 > Describe the general area covered by the project.
+Our idea for our Final Year Project is to create a Smart Garden. This will allow us to create an environment for plants to grow without any need to look after them.
 
 ### Outline
 
@@ -42,6 +43,7 @@
 ### Background
 
 > Where did the ideas come from?
+> 
 
 ### Achievements
 
@@ -54,18 +56,28 @@
 ### Programming language(s)
 
 > List the proposed language(s) to be used.
+1. Python 
+2. Javascript 
+3. Bash 
 
 ### Programming tools / Tech stack
 
 > Describe the compiler, database, web server, etc., and any other software tools you plan to use.
+> We are hoping to use the following to implement our project. 
+1. AWS EC2 for server 
 
 ### Hardware
-
 > Describe any non-standard hardware components which will be required.
+1. Servo to turn on/off pump
+2. Temperature sensor in soil 
+3. PH level sensor for soil
+4. Soil moisture level 
+
 
 ### Learning Challenges
 
 > List the main new things (technologies, languages, tools, etc) that you will have to learn.
+
 
 ### Breakdown of work
 
