@@ -81,9 +81,10 @@ necessarily have the means to perform maintenance on said plants, the system we 
 
 > List the proposed language(s) to be used.
 
-1. Python 
-2. Javascript 
+1. Python
+2. Javascript(Node) 
 3. Bash 
+4. AWS SDK for Python and Node 
 
 ### Programming tools / Tech stack
 
@@ -93,7 +94,8 @@ We are hoping to use the following to implement our project.
 1. AWS EC2 for server running nginx with a custom-built UI to interface with the Smart Garden
 2. Python to implement backend and aws greengrass to communicate with raspberry pi
 3. AWS SDK for Python, Javascript, CLI 
-4. Apache/Flask/Nginx 
+4. Apache/Flask/Nginx
+5. Database
 
 
 ### Hardware
@@ -130,15 +132,6 @@ We are hoping to use the following to implement our project.
 
 #### Student 2
 
-> *Student 2 should complete this section.*
+> *Student 2 should complete this section.
 
-## Example
-
-> Example: Here's how you can include images in markdown documents...
-
-<!-- Basically, just use HTML! -->
-
-<!--<p align="center">-->
-<!--  <img src="./res/cat.png" width="300px">-->
-<!--</p>-->
-
+Daniel will be assembling and coding the Raspberry Pi. This includes how the pi gathers data from each of it’s sensors and then sends them off to the EC2 server. He will also be responsible for how the pi receives server commands and outputs them to different accessories (light, heat, water)....
