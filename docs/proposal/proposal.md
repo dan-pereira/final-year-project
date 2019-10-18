@@ -9,7 +9,7 @@
 |Student 1 ID:        | 15492172          |
 |Student 2 Name:      | Daniel Pereira    |
 |Student 2 ID:        | 15364491          |
-|Project Supervisor:  | xxxxxx            |
+|Project Supervisor:  | Donal Fitzpatrick |
 
 ## SECTION B
 
@@ -86,8 +86,6 @@ We are hoping to use the following to implement our project.
 
 ### Learning Challenges
 
-> List the main new things (technologies, languages, tools, etc) that you will have to learn.
-
 1. Working with IOT
    * IOT is something we haven’t touched off during our time in University, it will be a steep learning curve getting the network PI up and running and getting it to communicate with EC2 server.
 2. Dashboard building
@@ -105,7 +103,7 @@ Jacob will also build the notification system we plan to implement. This feature
 #### Student 2
 
 Daniel will be assembling and coding the Raspberry Pi. There are 2 main functions of the pi from a software perspective, the first being fetching data from the environment. Each of the individual sensors will have to be accounted, interpreted and restructured into a suitable format. Using web requests the pi will then be programmed to push this data to the EC2 server. 
-The second function of the pi will be to perform as a restful server waiting for inputs from the EC2 server. Daniel will program the pi to receive any information from the server … will be converted to send commands to the individual controllers (water light, heat). 
+The second function of the pi will be to perform as a restful server waiting for inputs from the EC2 server. Daniel will program the pi to receive any information from the server and then convert it into commands which will be sent to the individual controllers (water light, heat). 
 
 #### Collaboration
 
