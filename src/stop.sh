@@ -1,0 +1,1 @@
+aws ec2 stop-instances --instance-ids i-07f811e984fc90a3b
