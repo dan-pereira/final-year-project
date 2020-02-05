@@ -6,11 +6,25 @@ app = Flask(__name__)
 @app.route('/login/<user>')
 def login(user): 
 	user1 = {'username' : user}
-	return render_template('index.html', title = 'Home', user = user1)
+	return render_template('login.html', title = 'Login', user = user1)
+
+@app.route('home')
+def homescreen():
+	return render_template('index.html', title = 'Home')
 
 @app.route('/graphs')
 def graph(graph_type):
-	return('graph')
+	return render_template('graphs.html', title = 'Graphs' ''', var = var''')
+
+app.route('/dash')
+def dash():
+	return render_template('dashboard.html', title = 'Dashboard' ''', var = var''')
+
+
+
+# @app.errorhandler(404): 
+# def invalidroute(e): 
+# 	return ('Sorry! Please check your URL and try again')
 
 if __name__ == '__main__': 
 	app.run(host = '0.0.0.0', port = 80)
