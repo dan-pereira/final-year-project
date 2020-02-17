@@ -8,7 +8,7 @@ def login(user):
 	user1 = {'username' : user}
 	return render_template('login.html', title = 'Login', user = user1)
 
-@app.route('home')
+@app.route('/home')
 def homescreen():
 	return render_template('index.html', title = 'Home')
 
@@ -20,11 +20,9 @@ app.route('/dash')
 def dash():
 	return render_template('dashboard.html', title = 'Dashboard' ''', var = var''')
 
-
-
 # @app.errorhandler(404): 
 # def invalidroute(e): 
 # 	return ('Sorry! Please check your URL and try again')
 
 if __name__ == '__main__': 
-	app.run(host = '0.0.0.0', port = 80)
+	app.run(host = '0.0.0.0', port = 80)	 #,ssl_context = ('cert.pem', 'key.pem'))
