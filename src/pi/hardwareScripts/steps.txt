@@ -1,0 +1,25 @@
+•Local network ssh•
+rasp config menu -> interfaces enable ssh
+
+•SPI Interface•
+through config interfaces
+
+•7-bit display•
+git clone https://github.com/rm-hull/max7219.git
+cd max7219
+sudo python setup.py install
+    !need to check what packages are installed
+used examples/sevensegment_demo.py
+
+• DS18B20 Temp Sensor•
+dtoverlay=w1-gpio >> /boot/config.txt
+reboot
+sudo modprobe w1-gpio
+sudo modeprobe w1-therm
+#check with
+    cat /sys/bus/w1/devices/28-0014113183ff/w1_slave
+#script from
+    http://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/
+
+•to run•
+nohup python -u ./fyp/tempSeg.py &
