@@ -13,7 +13,7 @@ def homescreen():
 	return render_template('index.html', title = 'Home')
 
 @app.route('/graphs')
-def graph(graph_type):
+def graph():#graph_type):
 	return render_template('graphs.html', title = 'Graphs' ''', var = var''')
 
 app.route('/dash')
@@ -25,4 +25,4 @@ def dash():
 # 	return ('Sorry! Please check your URL and try again')
 
 if __name__ == '__main__': 
-	app.run(host = '0.0.0.0', port = 80)	 #,ssl_context = ('cert.pem', 'key.pem'))
+	app.run(host = '127.0.0.1', port = 80, debug = True)	 #,ssl_context = ('cert.pem', 'key.pem'))

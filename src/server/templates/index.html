@@ -1,9 +1,12 @@
 <html> 
 	<head>
-		<h1> place holder </h1>
+		<title>{{ title }} - FYP</title>
 	</head> 
 	<body> 
-		<h2> lorum ipsum </h2>
-		<div> IOT Smart Garden: <a href="/login">Home</a></div>
+		<div> 
+			IOT Smart Garden: <a href="/login">Home</a>
+			<a href="/graphs">Graph </a>
+		</div>
+		<hr>{% block content %}{% endblock %}
 	</body>
 </html>
