@@ -1,0 +1,22 @@
+:l is the 'local' ec2 instance
+:r is the 'remote' raspi
+
+:l
+sudo systemctl start sshd
+#sudo systemctl enable sshd
+
+:r
+ssh -i /home/pi/fyp/sshing/pi.pem -R 19999:localhost:22 ubuntu@ec2-18-200-112-1.eu-west-1.compute.amazonaws.com
+
+:l
+localhost port 19999 will now be forwarded to port 22 of remote
+
+:l
+ssh pi@localhost -p19999
+
+:l needs to be fixed -> cant ssh login
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+sudo service ssh restart
+
+#note : tell if port is open
+telnet ip port
