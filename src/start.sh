@@ -1,1 +1,0 @@
-aws ec2 start-instances --instance-ids i-07f811e984fc90a3b
