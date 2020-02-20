@@ -1,4 +1,4 @@
-Place your functional specification in this directory.
+lPlace your functional specification in this directory.
 
 A general template for the functional specification (in MS Word format) is located in this directory. 
 
@@ -13,3 +13,7 @@ The first page of your functional specification should contain at least:
 **When it comes to actual submission, you should create a PDF copy of your final version and store it in this directory also.**
 
 *Do not place any other files in this directory.*
+
+# CA400 - Final Year Project 
+
+Functional Specification

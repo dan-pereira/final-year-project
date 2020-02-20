@@ -1,6 +1,6 @@
 # CA400 - Final Year Project 
  
-## Jacob Byrne & Daniel Pereira 
+## Daniel Pereira & Jacob Byrne
 
 An IOT Project to monitor house plants
 
