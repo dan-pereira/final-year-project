@@ -4,7 +4,11 @@ import boto3
 
 app = Flask(__name__)
 
-@app.route('/login/<user1r>')
+label = [ 'test', 'test1']
+value = [ 12, 45 ]
+
+
+@app.route('/login/<user1>')
 def login(user): 
 	user1 = {'username' : user}
 	return render_template('login.html', title = 'Login', user = user1)
@@ -15,7 +19,7 @@ def homescreen():
 
 @app.route('/graphs')
 def graph():#graph_type):
-	return render_template('graphs.html', title = 'Graphs' ''', var = var''')
+	return render_template('graphs.html', title = 'Graphs' ''', var = var''', labels = label, values = value)
 
 app.route('/dash')
 def dash():
