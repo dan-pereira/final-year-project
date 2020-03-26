@@ -3,10 +3,17 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>{{ title }} - FYP</title>
+		<style> 
+			.menubar {
+				position: sticky;
+				top: 0px;
+			}
+		</style>
 	</head> 
 	<body> 
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-		<div> 
+		<!-- chart library -->
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script> 
+		<div class = menubar> 
 			IOT Smart Garden: <a href="/login">Home</a> <a></a>
 		</div>
 		<center> 
@@ -34,10 +41,11 @@
 			}
 			var chart = document.getElementById("chart").getContext("2d");
 
-			new Chart(chart).Bar(bar, {
+			new Chart(chart).Line(bar, {
 				scaleStartValue: 0,
 				scaleShowVerticalLines: true, 
 				scaleShowGridLines: true,
+				bezierCurve: false, 
 				}
 			);
 			</script>

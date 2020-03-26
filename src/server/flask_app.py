@@ -4,14 +4,14 @@ import boto3
 
 app = Flask(__name__)
 
-label = [ 'test', 'test1']
-value = [ 12, 45 ]
+label = [ 'test', 'test', 'test', 'test', 'test']
+value = [ 12, 45 , 5, 90, 12]
 
 
-@app.route('/login/<user1>')
+@app.route('/login/<user>')
 def login(user): 
 	user1 = {'username' : user}
-	return render_template('login.html', title = 'Login', user = user1)
+	return render_template('login.html', title = 'Login', user = user)
 
 @app.route('/home')
 def homescreen():
