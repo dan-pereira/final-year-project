@@ -12,5 +12,5 @@ ech:
 push:
 	scp -r ../server  ubuntu@ec2-18-200-112-1.eu-west-1.compute.amazonaws.com:~/.
 
-push:
-	scp -r ubuntu@ec2-18-200-112-1.eu-west-1.compute.amazonaws.com:~/server/ ./
+pull:
+	scp -r ubuntu@ec2-18-200-112-1.eu-west-1.compute.amazonaws.com:~/server/ ../
