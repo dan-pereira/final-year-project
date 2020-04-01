@@ -1,29 +1,42 @@
 import mysql.connector 
+from mysql.connector import Error
 import os
-# print(os.environ['db_username'])
+from datetime import datetime 
 
-# try:
-x = mysql.connector.connect( 
+file = open('sample_sensor_values.txt', 'r')
+def collect(val): 
+	
+	x = mysql.connector.connect( 
 	user=os.environ['db_username'], 
 	host=os.environ['db_host'], 
-	password=os.environ['db_password'], 
+	passwd=os.environ['db_password'], 
 	database='mydb'
-)
+	)
 
-# except mysql.connector.Error as err: 
-# 	print(err)
+	mycursor = x.cursor()
 
-# # else:
-# 	x.close()
+	value = []
+	
+	for line in file.readlines(): 
+		line = line.split(" ") 
+		dts = (line[0] + " " + line[1])
+		value.append(str(dts))
+		print(value)
+	
+	for item in value: 
+		sql = ("""INSERT INTO sensor_val (timer) VALUES ('{}') """).format(item)
 
-mycursor = x.cursor()
+	# dtspushable = datetime.strptime(dts, '%Y-%m-%d %H:%M:%S')
+	# testpushable = dtspushable.strftime('%Y-%m-%d %H:%M:%S')
+	
+	# print(type(testpushable))
+		
+		mycursor.execute(sql)
+			
+		x.commit()
+		print(mycursor.rowcount, "record inserted")
 
-sql = "INSERT INTO sensor_values (moisture_value, temperature) VALUES (2, 11)"
-# val = (12)
+	x.close()
+	file.close()
 
-mycursor.execute(sql) 
-
-x.commit() 
-
-print(mycursor.rowcount, "record inserted")
-x.close()
+collect(file)
