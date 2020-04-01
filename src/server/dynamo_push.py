@@ -6,4 +6,3 @@ response = table.put_item(
 		'moisture_level': 20,
 		}
 	)
-
