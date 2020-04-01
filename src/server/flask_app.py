@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from flask import Flask 
 from flask import render_template
 import boto3 
@@ -31,4 +33,4 @@ def invalidroute(e):
 	return ('Sorry! Please check your URL and try again')
 
 if __name__ == '__main__': 
-	app.run(host = '127.0.0.1', port = 80, debug = True)	 #,ssl_context = ('cert.pem', 'key.pem'))
+	app.run(host = '0.0.0.0', port = 80, debug = True)	 #,ssl_context = ('cert.pem', 'key.pem'))
