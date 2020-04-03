@@ -2,9 +2,13 @@ import mysql.connector
 from mysql.connector import Error
 import os
 from datetime import datetime 
+import json
 
-file = open('sample_sensor_values.txt', 'r')
-def collect(val): 
+def collect(): 
+	with open('sample_sensor_values.json', 'r') as json_file: 
+		data = json_file.read() 
+
+	json_vals = json.loads(data)
 	
 	x = mysql.connector.connect( 
 	user=os.environ['db_username'], 
@@ -15,28 +19,23 @@ def collect(val):
 
 	mycursor = x.cursor()
 
-	value = []
-	
-	for line in file.readlines(): 
-		line = line.split(" ") 
-		dts = (line[0] + " " + line[1])
-		value.append(str(dts))
-		print(value)
-	
-	for item in value: 
-		sql = ("""INSERT INTO sensor_val (timer) VALUES ('{}') """).format(item)
+	for ts in json_vals: 
+		sensor_bank = []
+		timestamp = json_vals.get(ts)
 
-	# dtspushable = datetime.strptime(dts, '%Y-%m-%d %H:%M:%S')
-	# testpushable = dtspushable.strftime('%Y-%m-%d %H:%M:%S')
-	
-	# print(type(testpushable))
+		sensor_bank.append(ts)
+		for sensor_name in timestamp: 
+			if sensor_name in ('mcp00', 'mcp01', 'mcp02', 'mcp07', 'soilTemp', 'airTemp', 'humidity'):
+				sensor_bank.append(timestamp.get(sensor_name))
+		# print(sensor_bank[1])
+		sql = ("""INSERT INTO sensor_val (timer, moisture1, moisture2, moisture3, water_level, soiltemp1, air_temp, air_humid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s ) """)
 		
-		mycursor.execute(sql)
-			
+		tuple1 = (sensor_bank[0], sensor_bank[1], sensor_bank[2], sensor_bank[3], sensor_bank[4], sensor_bank[5], sensor_bank[6], sensor_bank[7])
+		
+		mycursor.execute(sql, tuple1)
 		x.commit()
-		print(mycursor.rowcount, "record inserted")
+		# print(mycursor.rowcount, "record inserted")
 
 	x.close()
-	file.close()
 
-collect(file)
+collect()

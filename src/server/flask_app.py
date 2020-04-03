@@ -3,13 +3,13 @@
 from flask import Flask 
 from flask import render_template
 import boto3 
-from dynamo_pull import dynamo_scan
+from database_query import query 
+import os
 
 app = Flask(__name__)
 
-label = [ 'test', 'test', 'test', 'test', 'test', 'test', 'test']
-# value = [ 12, 45 , 5, 90, 12]
-value = dynamo_scan()
+label = query()
+value = [12, 20, 3]
 
 @app.route('/login/<user>')
 def login(user): 
@@ -33,4 +33,4 @@ def invalidroute(e):
 	return ('Sorry! Please check your URL and try again')
 
 if __name__ == '__main__': 
-	app.run(host = '0.0.0.0', port = 80, debug = True)	 #,ssl_context = ('cert.pem', 'key.pem'))
+	app.run(host = '127.0.0.1', port = 5000, debug = True)	 #,ssl_context = ('cert.pem', 'key.pem'))
