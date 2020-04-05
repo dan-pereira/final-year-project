@@ -14,7 +14,11 @@ def query():
 
 	mycursor = x.cursor()
 
-	mycursor.execute("SELECT * FROM sensor_val") 
+	# mycursor.execute("SELECT * FROM customers")
+
+	# myresult = mycursor.fetchone()
+
+	mycursor.execute("SELECT timer, moisture1 FROM sensor_val") 
 
 	result = mycursor.fetchall() 
 	# print(result)
@@ -30,11 +34,16 @@ def query():
 
 	stamplist = []
 	stamplist = [x[0] for x in value]
+	moisturelist = [x[1] for x in value]
 	stamp = []
-	
+	moist  = []
 	for x in stamplist: 
 		stamp.append(x.strftime('%Y-%m-%d %H:%M:%S'))
 
-	# print(stamp)
-	return stamp
+	for x in moisturelist: 
+		moist.append(x)
+
+	print(moisturelist)
+	return stamp, moist
+
 query()

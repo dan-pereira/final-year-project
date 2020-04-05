@@ -31,7 +31,7 @@ def collect():
 		sql = ("""INSERT INTO sensor_val (timer, moisture1, moisture2, moisture3, water_level, soiltemp1, air_temp, air_humid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s ) """)
 		
 		tuple1 = (sensor_bank[0], sensor_bank[1], sensor_bank[2], sensor_bank[3], sensor_bank[4], sensor_bank[5], sensor_bank[6], sensor_bank[7])
-		
+		print(sensor_bank)
 		mycursor.execute(sql, tuple1)
 		x.commit()
 		# print(mycursor.rowcount, "record inserted")

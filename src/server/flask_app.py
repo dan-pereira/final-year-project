@@ -3,13 +3,10 @@
 from flask import Flask 
 from flask import render_template
 import boto3 
-from database_query import query 
+from database_query import *
 import os
 
 app = Flask(__name__)
-
-label = query()
-value = [12, 20, 3]
 
 @app.route('/login/<user>')
 def login(user): 
@@ -22,6 +19,9 @@ def homescreen():
 
 @app.route('/graphs')
 def graph():#graph_type):
+	result = query()
+	label = result[0]
+	value = result[1]
 	return render_template('graphs.html', title = 'Graphs' ''', var = var''',labels = label, values = value)
 
 app.route('/dash')
@@ -33,4 +33,4 @@ def invalidroute(e):
 	return ('Sorry! Please check your URL and try again')
 
 if __name__ == '__main__': 
-	app.run(host = '127.0.0.1', port = 5000, debug = True)	 #,ssl_context = ('cert.pem', 'key.pem'))
+	app.run(host = '127.0.0.1', port = 5000, debug = True)
