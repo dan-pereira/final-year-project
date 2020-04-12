@@ -3,47 +3,48 @@ from mysql.connector import Error
 import os
 from datetime import datetime 
 
-def query(): 
-	
-	x = mysql.connector.connect( 
-	user=os.environ['db_username'], 
-	host=os.environ['db_host'], 
-	passwd=os.environ['db_password'], 
-	database='mydb'
-	)
+def query(query): 
+    
+    x = mysql.connector.connect( 
+    user=os.environ['db_username'], 
+    host=os.environ['db_host'], 
+    passwd=os.environ['db_password'], 
+    database='mydb'
+    )
 
-	mycursor = x.cursor()
+    mycursor = x.cursor()
+    mycursor.execute(query) 
 
-	# mycursor.execute("SELECT * FROM customers")
+    result = mycursor.fetchall() 
 
-	# myresult = mycursor.fetchone()
+    x.close() 
 
-	mycursor.execute("SELECT timer, moisture1 FROM sensor_val") 
+    value = []
+    for item in result: 
+        print(type(item))
+        value.append(item) 
 
-	result = mycursor.fetchall() 
-	# print(result)
+    print(value)
 
-	x.close() 
+    '''
+    stamplist = []
+    stamplist = [x[0] for x in value]
+    moisturelist = [x[1] for x in value]
+    stamp = []
+    moist  = []
+    for x in stamplist: 
+        stamp.append(x.strftime('%Y-%m-%d %H:%M:%S'))
 
-	value = []
-	for item in result: 
-		# print(item)
-		value.append(item) 
+    for x in moisturelist: 
+        moist.append(x)
 
-	# print(value)
+    print(moisturelist)
+    return stamp, moist
+    '''
 
-	stamplist = []
-	stamplist = [x[0] for x in value]
-	moisturelist = [x[1] for x in value]
-	stamp = []
-	moist  = []
-	for x in stamplist: 
-		stamp.append(x.strftime('%Y-%m-%d %H:%M:%S'))
+if __name__ == "__main__":
 
-	for x in moisturelist: 
-		moist.append(x)
+    print(query('SELECT moisture1 FROM mydb.sensor_val order by timer desc limit 5'))
 
-	print(moisturelist)
-	return stamp, moist
 
-query()
+    #print(query("SELECT timer, moisture1 FROM sensor_val")
