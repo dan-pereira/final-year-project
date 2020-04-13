@@ -1,10 +1,8 @@
 import json
 import numpy as np
-#https://machinelearningmastery.com/how-to-save-a-numpy-array-to-file-for-machine-learning/ to save array
+from database_query import queryDB
 
-path=''
-
-#TODO
+path='/home/ubuntu/src/storage/'
 
 LEARNING_RATE = 0.1 #0-1 high is future low is current
 DISCOUNT = 0.95
@@ -13,13 +11,13 @@ DISCOUNT = 0.95
 epsilon must be decayed to learn
 1 is exploration 0 is exploitation
 '''
-epsilon = 0.8
+epsilon = 0.1
 
 '''
 max val = 0.85
 min val = 0.25
 diff = 0.6
-distance away from goal can be +-0.6
+distance away from goal can be +-100
 '''
 
 envMax = np.array([100]) #sensor max val
@@ -27,60 +25,75 @@ envMin = np.array([00]) #sensor min val
 granularity = [40] * len(envMax)
 tableStates = (envMax - envMin)/granularity
 
-actions = [0.2,0.25,0.3,0.35,0.4,0.45,0.5] 
+actions = [0.2,0.25,0.3,0.35,0.4,0.45,0.5]
 
-def crate_q_table():
-    q_table = np.random.uniform(low=-2, high=0, size=(granularity + [len(actions)]))
+def crate_q_table(i):
+    q_table = np.random.uniform(low=float(-2), high=float(0), size=(granularity + [len(actions)]))
+    np.save(path + 'q_table'+str(i), q_table)
     return
 
-def get_discrete_state(state):
+def getDiscreteState(state):
     ''' helper function to get discrete values '''
     discrete_state = (state - envMin)/tableStates
-    return tuple(discrete_state.astype(np.int))
+    return int(discrete_state)
+
+def reverseDiscrete(state):
+    result = state * tableStates[0]
+    return int(result)
 
 def getCurrentState():
-    #todo
-    states = []
-    '''
-    return list of 3 discrete_state values
-    '''
-    get last 3 values from the db for each
-    mcp00 = [x,y,z]
-    mcp01 = [x,y,z]
-    mcp02 = [x,y,z]
+    smoothing = 5 #how many states to avg
+    allStates = queryDB('SELECT moisture1,moisture2, moisture3 FROM mydb.sensor_val order by timer desc limit '+str(smoothing))
+    results = []
+    #print(allStates)
+    for i in range(3):
+        #print(i)
+        states = []
+        for j in range(smoothing):
+            #print(' ',j)
+            states.append(allStates[j][i])
+        results.append(getDiscreteState(np.average(states)))
+    return results
 
-    states = [mcp00,mcp01,mcp02]
-    return states
-
-def getReward(state,lastState):
+def getReward(state,lastState,goal):
     lastDistance = abs(goal-lastState)
     distance = abs(goal-state)
     reward = lastDistance - distance
     return reward
 
 def calculate(q_table, i, config,currentState):
-    
     sensor = 'mcp0'+str(i)
     lastState = config['last_state'][sensor]
+    lastState = getDiscreteState(lastState)
     goal = config['goal'][sensor]
-    actionTaken = config['controller'][i]
-    
-    reward = getReward(currentState,lastState)
-    
-    lastQ = q_table[lastState + (actionTaken,)]
+    goal = getDiscreteState(goal)
+    actionTaken = config['controller'][str(i)]
+    actionTaken = actions.index(actionTaken)
+
+    reward = getReward(currentState,lastState,goal)
+
+    print('lastState',lastState)
+    print('goal', goal)
+    print('actionTaken',actionTaken,str(actions[actionTaken]+'s')
+    print('reward =', reward)
+    lastQ = q_table[lastState][actionTaken]
     maxQ = np.max(q_table[currentState])
 
     # Update Q table with Q-value for last action
     improvedQ = (1 - LEARNING_RATE) * lastQ + LEARNING_RATE * (reward + DISCOUNT * maxQ)
-    q_table[lastState + (actionTaken,)] = improvedQ
-    
-    if np.random() > epsilon:
+    q_table[lastState][actionTaken] = improvedQ
+
+    if np.random.rand() > epsilon:
         # Maximum possible Q value for next step & next action
         action = np.argmax(q_table[currentState]) #choose highest ranked action from table
     else:
         action = np.random.randint(0, len(actions)) #pick random action to take
-    
-    config['controller'][i] = action
+
+    currentState = reverseDiscrete(currentState)
+
+    #print('action',actions[action])
+    #print(type(actions[action]))
+    config['controller'][str(i)] = actions[action]
     config['last_state'][sensor] = currentState
 
     return q_table, config
@@ -88,35 +101,26 @@ def calculate(q_table, i, config,currentState):
 
 if __name__ == '__main__':
 
-
-    #openConfig as config
-
     fileName = path+'q_learn_config.json'
-    with open(fileName, 'rvd+') as configFile:
+    #get config
+    with open(fileName, 'r') as configFile:
         data=configFile.read()
     config=json.loads(data)
+    cfa = config
 
     states = getCurrentState()
 
     for i in range(3):
-        q_table = np.load(path + 'q_table'+str(i))
+        q_table = np.load(path + 'q_table'+str(i)+'.npy')
         q_table, config = calculate(q_table,i,config,states[i])
+        np.save(path + 'q_table'+str(i)+'.npy', q_table)
 
-        np.save(path + 'q_table'+str(i), q_table)
+    #print(config)
+    #for it in config:
+    #    print(it)
+    #    print(config[it])
+    #write config
 
-    '''
-    rewrite config
-    '''
-    
-    with open(fileName, "r+") as file:
-        data = json.load(file)
-        data.update(entry)
-        json.dump(data, file,indent=2)
-
-if __name__ == '__main__':
-
-
-    #openConfig as config
-    fileName = path+'q_learn_config.json'
-    with open(fileName, 'r+') as configFile:
-        config=configFile.read()
+    with open(fileName, 'w') as configFile:
+        json.dump(config, configFile, indent=2)
+    print('--')
