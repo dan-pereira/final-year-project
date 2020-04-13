@@ -1,4 +1,5 @@
 import json
+import requests
 import numpy as np
 from database_query import queryDB
 
@@ -74,7 +75,7 @@ def calculate(q_table, i, config,currentState):
 
     print('lastState',lastState)
     print('goal', goal)
-    print('actionTaken',actionTaken,str(actions[actionTaken]+'s')
+    print('actionTaken',actionTaken,str(actions[actionTaken])+'s')
     print('reward =', reward)
     lastQ = q_table[lastState][actionTaken]
     maxQ = np.max(q_table[currentState])
@@ -123,4 +124,5 @@ if __name__ == '__main__':
 
     with open(fileName, 'w') as configFile:
         json.dump(config, configFile, indent=2)
-    print('--')
+    response = requests.post('http://localhost:5000/update_config', files={'file': open(fileName, 'rb')})
+    print(response)

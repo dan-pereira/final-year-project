@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import threading
 from gpiozero import MCP3008
 import Adafruit_DHT
@@ -23,7 +22,6 @@ def DHT11(values):
     pin = 4 #GPIO_NUM
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
     value = str(humidity)+'% '+str(temperature)+'°C'
-    #store('airHumidityTemp',value)
     values['airTemp']=temperature
     values['humidity']= humidity
     return# 'air HumidityTemp' , [humidity,temperature]
@@ -37,7 +35,6 @@ def DS18B20(values):
         line = f.readlines()[-1]
     t= line[line.rfind('t=')+2:-1]
     t=float(t)/1000.0
-    #store('soilTemp',str(t)+'°C')
     values['soilTemp']=t
     return# 'soilTemp', [t]
 
