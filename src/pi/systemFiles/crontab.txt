@@ -1,0 +1,8 @@
+#Auth for aws db
+db_username='*******'
+db_password='********************'
+db_host='database-****************************.amazonaws.com'
+
+10 * * * * /usr/bin/python3.7 /home/pi/src/controllers.py
+
+*/5 * * * * /home/pi/src/store.py >> /home/pi/src/data/logs/log.txt && echo $? >> /home/pi/src/data/logs/log.txt && date >> /home/pi/src/data/logs/log.txt

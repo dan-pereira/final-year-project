@@ -1,0 +1,4 @@
+#Connect to Pi
+alias ssh-pi='ssh pi@localhost -p 5999'
+alias sshcheck-access='watch -n1 nc -z localhost 5999 || echo "Pi SSH Tunnel not connected"'
+alias sshcheck-flask='nc -z localhost 5000 || echo "Pi SSH Tunnel not connected"'

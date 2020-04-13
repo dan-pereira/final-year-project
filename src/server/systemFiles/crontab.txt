@@ -1,0 +1,2 @@
+#run every 2 hours at 2mins past
+2 */2 * * * /home/ubuntu/src/sensorLearn.py >> /home/ubuntu/testing/logs.txt
