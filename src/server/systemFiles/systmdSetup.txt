@@ -4,20 +4,6 @@ systemd wont run sudo -> flask ports must be greater than 1024
 sudo systemctl status flask-app.service
 
 path = '/lib/systemd/system/flask-app.service'
-"
-[Unit]
-Description=Flask App Frontend
-After=network.target
-
-[Service]
-User=ubuntu
-WorkingDirectory=/home/ubuntu/server
-ExecStart=/usr/bin/python3 /home/ubuntu/server/flask_app.py
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-"
 
 sudo systemctl deamon-reload
 sudo systemctl start flask-app.service

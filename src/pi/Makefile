@@ -1,2 +1,0 @@
-hellomake: 
-	echo "hello world"
