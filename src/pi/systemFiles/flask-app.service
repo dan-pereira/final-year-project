@@ -1,0 +1,8 @@
+[Unit]
+Description=Flask App for ec2 post Requests
+After=network-online.target
+#If failing try network.target
+[Service]
+ExecStart=/home/pi/src/flask/flask_app.py
+[Install]
+WantedBy=multi-user.target
