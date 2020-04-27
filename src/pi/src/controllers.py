@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
+import json
 
 '''
 Called From crontab
 Turns on water pumps
 '''
 
+path='/home/pi/src/configs/'
 pins = [14,15,18]
 # GPIO setup
 GPIO.setmode(GPIO.BCM)
@@ -20,11 +22,15 @@ def water(pin,s):
 
 if __name__ == '__main__':
 
-    d={0:0.2,1:0.2,2:0.1}
-    #TODO read vals from correct location
+    #get config
+    fileName = path+'q_learn_config.json'
+    with open(fileName, 'r') as configFile:
+        data=configFile.read()
+    config=json.loads(data)
 
     try:
-        for key,val in d.items():
+        for key,val in config["controller"].items():
+            key = int(key)
             pin = pins[key]
             print('pump',key,'run for',val,'seconds')
             water(pin,val)
