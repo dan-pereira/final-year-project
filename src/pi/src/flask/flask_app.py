@@ -29,8 +29,9 @@ def updateconfig():
 
 @app.route('/water_plant', methods=['POST'])
 def water():
-    plantNo = request.form
-    return str(plantNo)
+    plantNo = int(request.form['plantNo'])
+    res = controllers.manWater(plantNo)
+    return res
 
 if __name__ == '__main__':
          app.run(host = 'localhost', port = '5000', debug = True) #,ssl_context = ('cert.pem', 'key.pem'))
