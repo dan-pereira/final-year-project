@@ -19,6 +19,14 @@ def water(pin,s):
     GPIO.output(pin, GPIO.LOW)  # Turn motor on
     time.sleep(s)
     GPIO.output(pin, GPIO.HIGH)  # Turn motor off
+    return
+
+def manWater(plantNo):
+    val = 0.3
+    pin = pins[plantNo]
+    print('pump',plantNo,'run for',val,'seconds')
+    water(pin,val)
+    return
 
 if __name__ == '__main__':
 
