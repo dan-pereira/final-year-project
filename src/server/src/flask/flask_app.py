@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-
+import sys
 from flask import Flask 
 from flask import render_template
 import boto3 
-from database_query import *
 import os
+sys.path.append('../')
+from database_query import *
+
 
 app = Flask(__name__)
 
@@ -18,8 +20,8 @@ def homescreen():
 	return render_template('index.html', title = 'Home')
 
 @app.route('/graphs')
-def graph():#graph_type):
-	result = query()
+def graph():#graph_type)
+	result = query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 20')
 	label = result[0]
 	value = result[1]
 	return render_template('graphs.html', title = 'Graphs' ''', var = var''',labels = label, values = value)

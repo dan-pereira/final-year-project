@@ -19,14 +19,15 @@ def query(query):
 
     x.close() 
 
+    # return result 
+
     value = []
     for item in result: 
-        print(type(item))
+        # print(type(item))
         value.append(item) 
 
-    print(value)
+    # print(value)
 
-    '''
     stamplist = []
     stamplist = [x[0] for x in value]
     moisturelist = [x[1] for x in value]
@@ -38,13 +39,10 @@ def query(query):
     for x in moisturelist: 
         moist.append(x)
 
-    print(moisturelist)
-    return stamp, moist
-    '''
+    # print(stamp)
+    # print(moisturelist)
 
-if __name__ == "__main__":
+    return (stamp, moisturelist)
 
-    print(query('SELECT moisture1 FROM mydb.sensor_val order by timer desc limit 5'))
-
-
-    #print(query("SELECT timer, moisture1 FROM sensor_val")
+# if __name__ == "__main__":
+#     print(query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 5'))
