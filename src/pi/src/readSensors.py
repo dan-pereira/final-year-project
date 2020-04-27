@@ -5,6 +5,7 @@ import Adafruit_DHT
 import os
 import glob
 import time
+import sys
 
 def mcp3008(values):
     '''
@@ -14,7 +15,16 @@ def mcp3008(values):
     for i in range(8):
         value = MCP3008(channel=i).value
         name= 'mcp0'+str(i)
+
+        if i < 7:
+            value = 100 - (((value - 0.25) / (0.6)) * 100) #moisture inverted min = 0.25 max = 0.85
+        else:
+            value = (((value - 0.004) / (0.135)) * 100) #waterLevel min = 0.005 max = 0.14
+        value = 0 if value < 0 else value
+        value = 100 if value > 100 else value
+
         values[name]=value
+    print('mcp,fin')
     return# 'mcp0-7',values
 
 def DHT11(values):
@@ -24,6 +34,7 @@ def DHT11(values):
     value = str(humidity)+'% '+str(temperature)+'°C'
     values['airTemp']=temperature
     values['humidity']= humidity
+    print('DHT,fin')
     return# 'air HumidityTemp' , [humidity,temperature]
 
 def DS18B20(values):
@@ -36,26 +47,17 @@ def DS18B20(values):
     t= line[line.rfind('t=')+2:-1]
     t=float(t)/1000.0
     values['soilTemp']=t
+    print('DS1,fin')
     return# 'soilTemp', [t]
 
 def readSensors():
     sensors = [DHT11, mcp3008, DS18B20]
-    #sensors = [mcp3008, DS18B20]
-    threads = []
+
     values = {}
-    start=time.time()
-    for sensor in sensors:
-        thread = threading.Thread(name=sensor.__name__,target=sensor,args=[values])
-        thread.start()
-        threads.append(thread)
-        print(thread.name,'Started')
+    DHT11(values)
+    mcp3008(values)
+    DS18B20(values)
 
-    for thread in threads:
-        thread.join()
-        print(thread.name,'ended:',str(time.time()-start)+'s')
-        #results.append(thread.result())
-
-    #print('read vals:',values)
     return values
 
 if __name__ == '__main__':
