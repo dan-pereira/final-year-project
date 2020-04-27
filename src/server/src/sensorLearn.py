@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 import requests
 import numpy as np
@@ -26,7 +27,7 @@ envMin = np.array([00]) #sensor min val
 granularity = [40] * len(envMax)
 tableStates = (envMax - envMin)/granularity
 
-actions = [0.2,0.25,0.3,0.35,0.4,0.45,0.5]
+actions = [0.15,0.2,0.25,0.3,0.35,0.4,0.45]
 
 def crate_q_table(i):
     q_table = np.random.uniform(low=float(-2), high=float(0), size=(granularity + [len(actions)]))
@@ -65,17 +66,20 @@ def getReward(state,lastState,goal):
 def calculate(q_table, i, config,currentState):
     sensor = 'mcp0'+str(i)
     lastState = config['last_state'][sensor]
+    print('lastState',lastState, '->',currentState)
     lastState = getDiscreteState(lastState)
     goal = config['goal'][sensor]
+    print('goal', goal)
     goal = getDiscreteState(goal)
+
     actionTaken = config['controller'][str(i)]
+
+    print(actionTaken)
+    print('actionTaken',str(actionTaken)+'s')
     actionTaken = actions.index(actionTaken)
 
     reward = getReward(currentState,lastState,goal)
 
-    print('lastState',lastState)
-    print('goal', goal)
-    print('actionTaken',actionTaken,str(actions[actionTaken])+'s')
     print('reward =', reward)
     lastQ = q_table[lastState][actionTaken]
     maxQ = np.max(q_table[currentState])
@@ -94,7 +98,10 @@ def calculate(q_table, i, config,currentState):
 
     #print('action',actions[action])
     #print(type(actions[action]))
-    config['controller'][str(i)] = actions[action]
+
+    if config['manual_mode'] == 0:
+        config['controller'][str(i)] = actions[action]
+
     config['last_state'][sensor] = currentState
 
     return q_table, config
