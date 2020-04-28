@@ -1,2 +1,7 @@
+#Auth for aws db
+db_username='*******'
+db_password='********************'
+db_host='database-****************************.amazonaws.com'
 #run every 2 hours at 2mins past
 2 */2 * * * /home/ubuntu/src/sensorLearn.py >> /home/ubuntu/testing/logs.txt
+1 */2 * * * date >> /home/ubuntu/testing/logs.txt
