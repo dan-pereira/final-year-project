@@ -6,7 +6,7 @@ import boto3
 import os
 sys.path.append('../')
 from database_query import *
-
+from manualWater import waterPlant
 
 app = Flask(__name__)
 
@@ -21,14 +21,20 @@ def homescreen():
 
 @app.route('/graphs')
 def graph():#graph_type)
-	result = query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 20')
+	result = query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 5')
 	label = result[0]
 	value = result[1]
-	return render_template('graphs.html', title = 'Graphs' ''', var = var''',labels = label, values = value)
+	return render_template('graphs.html', title = 'Graphs' ''', var = var''',labels1 = label, values1 = value)
 
 app.route('/dash')
 def dash():
 	return render_template('dashboard.html', title = 'Dashboard' ''', var = var''')
+
+@app.route('/water')
+def water():
+	response = waterPlant()
+	print('watered')
+	return response
 
 @app.errorhandler(404)
 def invalidroute(e): 
@@ -36,3 +42,4 @@ def invalidroute(e):
 
 if __name__ == '__main__': 
 	app.run(host = '127.0.0.1', port = 5000, debug = True)
+	

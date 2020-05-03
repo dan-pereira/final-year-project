@@ -24,7 +24,7 @@
 				function graphy()  {
 					var bar = { 
 						labels : [ 
-							{% for item in labels %} 
+							{% for item in labels1 %} 
 								"{{ item }}",
 							{% endfor %}
 						], 
@@ -33,7 +33,7 @@
 							strokeColor: "rgba(151,187,205,1)",
 							pointColor: "rgba(151,187,205,1",
 							data : [
-							{% for item in values %}
+							{% for item in values1 %}
 								{{ item }}, 
 							{% endfor %}
 							]
@@ -51,6 +51,8 @@
 				);
 			}
 			</script>
+		</center>
 		<hr>{% block content %}{% endblock %}
+		<button> <a href = "/water">Water Plants</a></button>
 	</body>
 </html>
