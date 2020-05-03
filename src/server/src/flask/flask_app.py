@@ -22,9 +22,13 @@ def homescreen():
 @app.route('/graphs')
 def graph():#graph_type)
 	result = query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 5')
+	result1 = query('SELECT timer, moisture2 FROM mydb.sensor_val order by timer desc limit 5')
+	result2 = query('SELECT timer, moisture3 FROM mydb.sensor_val order by timer desc limit 5')
 	label = result[0]
 	value = result[1]
-	return render_template('graphs.html', title = 'Graphs' ''', var = var''',labels1 = label, values1 = value)
+	vals2 = result1[1]
+	vals3 = result2[1] 
+	return render_template('graphs.html', title = 'Graphs' ''', var = var''',labels1 = label, values1 = value, values2 = vals2, values3 = vals3)
 
 app.route('/dash')
 def dash():

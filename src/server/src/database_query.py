@@ -44,7 +44,7 @@ def query(query):
 
     return (stamp, moisturelist)
 if __name__ == "__main__":
-    result = (query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 1'))
+    result = (query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 5'))
 
 #     # print(result)
 #     i = 0
