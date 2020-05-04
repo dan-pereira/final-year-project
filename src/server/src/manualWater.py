@@ -3,13 +3,14 @@ import requests
 
 path = 'storage/'
 actualActions = [0.15,0.2,0.25,0.3,0.35,0.4,0.45]
-def waterPlant():
+def waterPlant(plantNumber):
     '''
     will hit endpoint on raspi to water
     '''
-    # plantNo = {'plantNo' : 1}
-    # response = requests.post('http://localhost:5000/water_plant',data = plantNo)
-    # print(response.content)
+    plantNo = {'plantNo' : plantNumber}
+    response = requests.post('http://localhost:5000/water_plant',data = plantNo)
+    print(response.content)
+    print('-------plant watered!!---------')
     return('hit')
 
 def readConfig():
@@ -31,7 +32,7 @@ def manAutoSelect(val):
     config = readConfig()
     if int(val) == 1:
         config["manual_mode"]=1
-    else
+    else:
         config["manual_mode"]=0
     writeConfig(config)
     return

@@ -16,58 +16,87 @@
 		<div class = menubar> 
 			IOT Smart Garden: <a href="/login">Home</a> <a></a>
 		</div>
-		<button onclick = "graphy()">Plant 1 Moisture Level</button>
+		<div id = "legend"></div>
+		<center>
+			<button onclick = "graphy()">Display Moisture Values</button>
+		</center>
 		<center> 
 			<h1>{{ Plotting }}</h1>
 			<canvas id="chart" width="600" height="400"></canvas>
 			<script> 
 				function graphy() {
-					Chart.defaults.global.scaleLineColor = "black";
-					// Chart.defaults.global.elements.line.fill = true;
 					var bar = { 
 						labels : [ 
 							{% for item in labels1 %} 
 								"{{ item }}",
 							{% endfor %}
 							], 
-						datasets : [{ 
+						datasets : [{
+							fillColor: 'rgba(255, 255, 255, 0.1)',
+							strokeColor: 'rgba(0, 0, 0, 1)',
+							pointColor: 'rgba(255, 255, 255, 0.1)',
+							
 							data : [
 							{% for item in values1 %}
 								{{ item }}, 
 							{% endfor %}
 							], 
-							label: "PLANT 1",
-						}, 
+							label: "Plant 1",
+							fill: false,
+							borderColor: 'rgba(212, 17, 17, 0.1)',
+						} , 
 						{
 							data : [
 							{% for item in values2 %} 
-								"{{ item }}",
+								{{ item }},
 							{% endfor %}
 							],
-							label: "PLANT 2",
-						}, 
+							label: "Plant 2",
+							fill: false,
+							borderColor: 'rgba(212, 17, 17, 0.1)'
+						} ,
 						{ 
 							data : [
 							{% for item in values3 %} 
-								"{{ item }}",
+								{{ item }},
 							{% endfor %}
 							],
-							label: "PLANT 3",
-						}
+							label: "Plant 3",
+							fill: false,
+							borderColor: 'rgba(212, 17, 17, 0.1)',
+						}, 	
 					]
 				}
-				var chart = document.getElementById("chart").getContext("2d");
+				// 	var opty = {
+				// 		title: {
+				// 			display: true, 
+				// 			text: "Moisture Values for plants 1, 2 and 3"
+				// 		}
+				// 	}
+				// }
+				// Chart.defaults.global.elements.line.fill = false;
+				// var legend = chart.generateLegend();
+				// document.getElementById("legend").innerHTML = legend;
+				var chart = document.getElementById("chart").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
 					scaleShowVerticalLines: true, 
 					scaleShowGridLines: true,
 					bezierCurve: false, 
-					}
+					scaleShowLabels: true, 
+					},
 				);
 			}
 			</script>
 		</center>
 		<hr>{% block content %}{% endblock %}
-		<button> <a href = "/water">Water Plants</a></button>
+		<center>
+			<!-- <button><a href = "/water/1">Water Plant 1</a></button>
+			<button> <a href = "/water/2">Water Plant 2</a></button>
+			<button> <a href = "/water/3">Water Plant3</a></button> -->
+			<a href = "/water/1"><button type = "button">Water Plant 1</button></a>
+			<a href = "/water/2"><button type = "button">Water Plant 2</button></a>
+			<a href = "/water/3"><button type = "button">Water Plant 3</button></a>
+		</center>
 	</body>
 </html>

@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import sys
-from flask import Flask 
-from flask import render_template
+from flask import Flask, render_template, redirect
 import boto3 
 import os
 sys.path.append('../')
@@ -34,11 +33,11 @@ app.route('/dash')
 def dash():
 	return render_template('dashboard.html', title = 'Dashboard' ''', var = var''')
 
-@app.route('/water')
-def water():
-	response = waterPlant()
+@app.route('/water/<plant_number>')
+def water(plant_number):
+	response = waterPlant(plant_number)
 	print('watered')
-	return response
+	return redirect('/graphs')
 
 @app.errorhandler(404)
 def invalidroute(e): 
