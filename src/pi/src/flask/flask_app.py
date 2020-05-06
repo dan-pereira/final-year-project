@@ -30,8 +30,8 @@ def updateconfig():
 
 @app.route('/water_plant', methods=['POST'])
 def water():
-    plantNo = int(request.form['plantNo'])
-    res = controllers.manWater(plantNo)
+    plantNos = list(request.form['plantNo'])
+    res = controllers.manWater(plantNos)
     return res
 
 
