@@ -3,7 +3,7 @@ from mysql.connector import Error
 import os
 from datetime import datetime 
 
-def query(query): 
+def queryDB(query):
     
     x = mysql.connector.connect( 
     user=os.environ['db_username'], 
