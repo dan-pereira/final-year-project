@@ -32,6 +32,7 @@ def manAutoSelect(val):
     config = readConfig()
     if int(val) == 1:
         config["manual_mode"]=1
+        # 1 = manual, 0 = automatic
     else:
         config["manual_mode"]=0
     writeConfig(config)

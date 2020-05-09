@@ -5,7 +5,7 @@ import boto3
 import os
 sys.path.append('../')
 from database_query import *
-from manualWater import waterPlant
+from manualWater import waterPlant, manAutoSelect
 
 app = Flask(__name__)
 
@@ -38,6 +38,12 @@ def water(plant_number):
 	response = waterPlant(plant_number)
 	print('watered')
 	return redirect('/graphs')
+
+@app.route('/mode/<val>')
+def modeselect(val): 
+	response = manAutoSelect(val) 
+	print('mode ', val, ' selected')
+	return redirect('graphs')
 
 @app.errorhandler(404)
 def invalidroute(e): 
