@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import json
 import requests
+import time
 import numpy as np
 from database_query import queryDB
 
@@ -33,12 +34,12 @@ envMin = np.full((5, 1), 0)  # sensor min val
 granularity = [40] * len(envMax)
 tableStates = (envMax - envMin) / granularity
 
-actions = [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]
+possibleActions = [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]
 
 
 def crate_q_table():
     q_table = np.random.uniform(low=float(-2), high=float(0),
-                                size=(granularity + [len(actions)]))  # initialize with negative rewards
+                                size=(granularity + [len(possibleActions)]))  # initialize with negative rewards
     np.save(path + 'q_table_full', q_table)
     return
 
@@ -58,6 +59,16 @@ def reverseDiscrete(states):
     nonDiscrete = states * tableStates[0]
     result = [nonDiscrete[i][0][0] for i in range(len(nonDiscrete))]
     return result
+
+
+def getActionStates():
+    l = len(possibleActions)
+    actions = []
+    for a in range(l):
+        for b in range(l):
+            for c in range(l):
+                actions.append([possibleActions[a],possibleActions[b],possibleActions[c]])
+    return actions
 
 
 def getCurrentValues():
@@ -82,53 +93,8 @@ def getSensorReward(state, lastState, goal):
     lastDistance = abs(goal - lastState)
     distance = abs(goal - state)
     reward = lastDistance - distance
+    print(reward)
     return reward
-
-
-def calculate(q_table, config, currentState):
-    i = 0
-    sensor = 'mcp0' + str(i)
-
-    lastState = config['last_state'][sensor]
-    print('lastState', lastState, '->', currentState)
-    lastState = getDiscreteState(lastState)
-    goal = config['goal'][sensor]
-    print('goal', goal)
-    goal = getDiscreteState(goal)
-
-    actionTaken = config['controller'][str(i)]
-
-    print(actionTaken)
-    print('actionTaken', str(actionTaken) + 's')
-    actionTaken = actions.index(actionTaken)
-
-    reward = getReward(currentState, lastState, goal)
-
-    print('reward =', reward)
-    lastQ = q_table[lastState][actionTaken]
-    maxQ = np.max(q_table[currentState])
-
-    # Update Q table with Q-value for last action
-    improvedQ = (1 - LEARNING_RATE) * lastQ + LEARNING_RATE * (reward + DISCOUNT * maxQ)
-    q_table[lastState][actionTaken] = improvedQ
-
-    if np.random.rand() > epsilon:
-        # Maximum possible Q value for next step & next action
-        action = np.argmax(q_table[currentState])  # choose highest ranked action from table
-    else:
-        action = np.random.randint(0, len(actions))  # pick random action to take
-
-    currentState = reverseDiscrete(currentState)
-
-    # print('action',actions[action])
-    # print(type(actions[action]))
-
-    if config['manual_mode'] == 0:
-        config['controller'][str(i)] = actions[action]
-
-    config['last_state'][sensor] = currentState
-
-    return q_table, config
 
 
 def getReward(config, currentState, lastState):
@@ -136,39 +102,19 @@ def getReward(config, currentState, lastState):
     for i in range(len(config['controller'])):
         currentValue = currentState[i][0][0]
         lastValue = lastState[0][i]
+        print('sensor',i)
         reward += getSensorReward(currentValue, lastValue, config['goals'][i])
         # print(currentValue,lastValue,config['goals'][i])
     return reward
 
-    # sensor = 'mcp0' + str(i)
-    #
-    # # lastState = config['last_state'][sensor]
-    # # print('lastState', lastState, '->', currentState)
-    # lastState = getDiscreteState(lastState)
-    # goal = config['goal'][sensor]
-    # print('goal', goal)
-    # goal = getDiscreteState(goal)
-    #
-    # actionTaken = config['controller'][str(i)]
-    #
-    # print(actionTaken)
-    # print('actionTaken', str(actionTaken) + 's')
-    # actionTaken = actions.index(actionTaken)
-    #
-    # getSensorReward(state, lastState, goal)
-    #
-    # return reward
 
-
-def tstCalculate(config, currentState):
-    q_table = []
-
+def calculate(q_table, config, currentState, actions):
     lastState = config['last_state']
 
+    print('State Change', lastState, '->', reverseDiscrete(currentState))
     lastState = getDiscreteState(lastState)
 
-    # todo reverse dis both and print at end
-    # print('lastState', lastState, '->', currentState)
+    # todo actions are incorrect size and range
 
     reward = getReward(config, currentState, lastState)
     print('reward =', reward)
@@ -176,37 +122,43 @@ def tstCalculate(config, currentState):
     actionsTaken = config['controller']
     actionTaken = [actions.index(x) for x in actionsTaken]
 
-    print('actionsTaken', str(actionTaken))
     print('actionsTaken', str(actionsTaken))
-
-    # todo HERE
+    print('indexTaken', str(actionTaken))
 
     lastQ = q_table[lastState][actionTaken]
-    print(lastQ)
+    print('last->', lastQ)
     maxQ = np.max(q_table[currentState])
-    print(maxQ)
+    # print('max->', maxQ)
 
     # Update Q table with Q-value for last action
     improvedQ = (1 - LEARNING_RATE) * lastQ + LEARNING_RATE * (reward + DISCOUNT * maxQ)
+    # print('improvedLast->',improvedQ)
     q_table[lastState][actionTaken] = improvedQ
 
-    #todo actions breaking assignment order
-    # if np.random.rand() > epsilon:
-    #     # Maximum possible Q value for next step & next action
-    #     actions = np.argmax(q_table[currentState])  # choose highest ranked action from table
-    # else:
-    #     actions = np.random.randint(0, len(actions))  # pick random action to take
-    #
-    # currentState = reverseDiscrete(currentState)
+    if np.random.rand() > epsilon:
+        # Maximum possible Q value for next step & next action
+        actions = np.argmax(q_table[currentState])  # choose highest ranked action from table
+        print('+', actions)
+    else:
+        actions = np.random.randint(0, len(actions))  # pick random action to take
+        print('-', actions)
 
+    currentState = reverseDiscrete(currentState)
 
-    print('action',actions[action])
-    print(type(actions[action]))
+    print('currState',currentState)
+    print('actionsToTake',actions[actions])
+    # print(type(actions[action]))
 
+    # print('State Change', reverseDiscrete(lastState), '->', reverseDiscrete(currentState))
+    # print(config['goals'])
+    # print('actionsTaken', str(actionsTaken))
+    # print('reward =', reward)
+
+    #Apply predicted actions
     if config['manual_mode'] == 0:
         config['controller'] = [actions]
 
-    config['last_state'][sensor] = currentState
+    config['last_state'] = currentState
 
     return q_table, config
 
@@ -214,12 +166,12 @@ def tstCalculate(config, currentState):
 if __name__ == '__main__':
     # todo testing area
 
-    config = {'controller': [0.3, 0.2, 0.3], 'last_state': [82.5, 62.5, 77.5, 22.5, 50.0], 'goals': [71, 73, 75]}
+    # config = {'controller': [0.3, 0.2, 0.3], 'last_state': [82.5, 62.5, 77.5, 22.5, 50.0], 'goals': [71, 73, 75],"manual_mode":0}
 
-    values = getCurrentValues()
+    # values = getCurrentValues()
     # print(values)
 
-    tstCalculate(config, values)
+    # tstCalculate(config, values, possibleActions)
     # q_table, config = calculate(config, values)
 
     # newV = reverseDiscrete(values)
@@ -227,33 +179,38 @@ if __name__ == '__main__':
     # todo testing area
 
     # fileName = path+'q_learn_config.json'
-    # fileName = path + 'fullDefaultConfig.json'
-    # # get config
-    # with open(fileName, 'r') as configFile:
-    #     data = configFile.read()
-    # config = json.loads(data)
+    fileName = path + 'fullDefaultConfig.json'
+    # get config
+    with open(fileName, 'r') as configFile:
+        data = configFile.read()
+    config = json.loads(data)
 
-    # config = {'controller': {'0': 0.3, '1': 0.2, '2': 0.3}, 'goal': {'mcp00': 75, 'mcp01': 75, 'mcp02': 75}, 'last_state': {'mcp00': 90, 'mcp01': 90, 'mcp02': 90}}
-    #
-    # values = getCurrentValues()
-    # print(values)
+    config = {'controller': [0.3, 0.2, 0.3], 'last_state': [82.5, 62.5, 77.5, 22.5, 50.0], 'goals': [71, 73, 75], "manual_mode": 1}
 
-    '''
+    values = getCurrentValues()
+    print(values)
+    actionStates = getActionStates()
+
+    s = time.time()
     q_table = np.load(path + 'q_table_full.npy')
-    q_table, config = calculate(q_table, config, values)
-    np.save(path + 'q_table_full.npy', q_table)
-    q_table = np.load(path + 'q_table_full.npy')
-    q_table, config = calculate(q_table, config, values)
-    np.save(path + 'q_table_full.npy', q_table)
+    e = time.time()
+    print(e-s)
+    print('size->',q_table.size)
+    # q_table = {}
+    q_table, config = calculate(q_table, config, values, actionStates)
 
-    # print(config)
+    s = time.time()
+    np.save(path + 'q_table_full.npy', q_table)
+    e = time.time()
+    print(e-s)
+
+    print(config)
     # for it in config:
     #    print(it)
     #    print(config[it])
-    # write config
 
+    # write config
     with open(fileName, 'w') as configFile:
         json.dump(config, configFile, indent=2)
-    response = requests.post('http://localhost:5000/update_config', files={'file': open(fileName, 'rb')})
-    print(response)
-    '''
+    # response = requests.post('http://localhost:5000/update_config', files={'file': open(fileName, 'rb')})
+    # print(response)
