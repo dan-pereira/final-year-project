@@ -1,3 +1,4 @@
+#Future
 #!/usr/bin/python3
 import json
 import requests
@@ -9,7 +10,6 @@ sampleQuery = [(82.4743, 61.9565, 79.3804, 23.0, 51.0), (82.9629, 61.7937, 81.17
                (83.1257, 66.516, 79.3804, 23.0, 51.0), (84.4284, 62.1194, 79.2176, 23.0, 51.0),
                (82.1487, 61.9565, 79.7061, 23.0, 50.0)]
 path = '/home/ubuntu/src/storage/'
-path = '/Users/dan/fy/fyp/2020-ca400-byrnj233-pereird2/src/server/src/storage/'
 queryString = 'SELECT moisture1,moisture2, moisture3, air_temp,air_humid FROM mydb.sensor_val order by timer desc limit '
 
 LEARNING_RATE = 0.1  # 0-1 high is future low is current
@@ -38,8 +38,7 @@ possibleActions = [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]
 
 
 def crate_q_table():
-    q_table = np.random.uniform(low=float(-2), high=float(0),
-                                size=(granularity + [len(possibleActions)]))  # initialize with negative rewards
+    q_table = np.random.uniform(low=float(-2), high=float(0), size=(granularity + [len(possibleActions)]))  # initialize with negative rewards
     np.save(path + 'q_table_full', q_table)
     return
 
@@ -115,12 +114,14 @@ def calculate(q_table, config, currentState, actions):
     lastState = getDiscreteState(lastState)
 
     # todo actions are incorrect size and range
+    # To fix this q_learning model will need to have every state of values and will be 68.9 time bigger
+    # todo build q_table on the fly because of so many states that will never be reached
 
     reward = getReward(config, currentState, lastState)
     print('reward =', reward)
 
-    actionsTaken = config['controller']
-    actionTaken = [actions.index(x) for x in actionsTaken]
+    actionsTaken = config['controller'] #actual Values
+    actionTaken = actions.index( actionsTaken) #index of values
 
     print('actionsTaken', str(actionsTaken))
     print('indexTaken', str(actionTaken))
@@ -179,8 +180,8 @@ if __name__ == '__main__':
     # todo testing area
 
     # fileName = path+'q_learn_config.json'
-    fileName = path + 'fullDefaultConfig.json'
     # get config
+    fileName = path + 'fullDefaultConfig.json'
     with open(fileName, 'r') as configFile:
         data = configFile.read()
     config = json.loads(data)
@@ -195,7 +196,7 @@ if __name__ == '__main__':
     q_table = np.load(path + 'q_table_full.npy')
     e = time.time()
     print(e-s)
-    print('size->',q_table.size)
+    # print('size->',q_table.size)
     # q_table = {}
     q_table, config = calculate(q_table, config, values, actionStates)
 
