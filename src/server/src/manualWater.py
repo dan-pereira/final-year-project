@@ -1,7 +1,7 @@
 import json
 import requests
 
-path = 'storage/'
+path = '../storage/'
 actualActions = [0.15,0.2,0.25,0.3,0.35,0.4,0.45]
 def waterPlant(plantNumber):
     '''

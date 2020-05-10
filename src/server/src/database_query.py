@@ -43,9 +43,9 @@ def queryDB(query):
     print(moisturelist)
 
     return (stamp, moisturelist)
-if __name__ == "__main__":
-    result = (query('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 5'))
-
+# if __name__ == "__main__":
+#     result1 = (queryDB('SELECT timer, moisture1 FROM mydb.sensor_val order by timer desc limit 5'))
+#     result = (queryDB('SELECT timer, water_level FROM mydb.sensor_val order by timer desc limit 5'))
 #     # print(result)
 #     i = 0
 #     while i<len(result[0]): 

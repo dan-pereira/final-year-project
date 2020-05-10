@@ -13,18 +13,22 @@
 	<body> 
 		<!-- chart library -->
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script> 
+		<!-- <script src = static/chart.js></script> -->
 		<div class = menubar> 
 			IOT Smart Garden: <a href="/login">Home</a> <a></a>
 		</div>
-		<div id = "legend"></div>
+		<!-- PLANT 1 -->
 		<center>
-			<button onclick = "graphy()">Display Moisture Values</button>
+			<h2> Moisture Values </h2>
+			<button onclick = "graphy()">Display Moisture Values - Plant 1</button>
+			<button onclick = "graphy2()">Display Moisture Values - Plant 2</button>
+			<button onclick = "graphy3()">Display Moisture Values - Plant 3</button>
 		</center>
-		<center> 
-			<h1>{{ Plotting }}</h1>
-			<canvas id="chart" width="600" height="400"></canvas>
+			<center>
+				<canvas id="chart" width="600" height="400"></canvas>
+			</center>
 			<script> 
-				function graphy() {
+				 function graphy() { 
 					var bar = { 
 						labels : [ 
 							{% for item in labels1 %} 
@@ -34,49 +38,25 @@
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)',
-							
+							pointColor: 'rgba(255, 255, 255, 0.1)', 
 							data : [
 							{% for item in values1 %}
 								{{ item }}, 
 							{% endfor %}
 							], 
 							label: "Plant 1",
-							fill: false,
-							borderColor: 'rgba(212, 17, 17, 0.1)',
-						} , 
-						{
-							data : [
-							{% for item in values2 %} 
-								{{ item }},
-							{% endfor %}
-							],
-							label: "Plant 2",
-							fill: false,
-							borderColor: 'rgba(212, 17, 17, 0.1)'
-						} ,
-						{ 
-							data : [
-							{% for item in values3 %} 
-								{{ item }},
-							{% endfor %}
-							],
-							label: "Plant 3",
-							fill: false,
-							borderColor: 'rgba(212, 17, 17, 0.1)',
-						}, 	
+							// fill: false,
+							// borderColor: 'rgba(212, 17, 17, 0.1)',
+						},
 					]
 				}
-				// 	var opty = {
-				// 		title: {
-				// 			display: true, 
-				// 			text: "Moisture Values for plants 1, 2 and 3"
-				// 		}
-				// 	}
-				// }
-				// Chart.defaults.global.elements.line.fill = false;
-				// var legend = chart.generateLegend();
-				// document.getElementById("legend").innerHTML = legend;
+				var options = {
+					title : {
+						display:true, 
+						test:'test', 
+						position: 'top'
+					}
+				};
 				var chart = document.getElementById("chart").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
@@ -84,12 +64,248 @@
 					scaleShowGridLines: true,
 					bezierCurve: false, 
 					scaleShowLabels: true, 
+					options: options,
+					},
+				);
+			}
+		</script>
+		<!-- PLANT 2 -->
+			<script> 
+				 function graphy2() { 
+					var bar = { 
+						labels : [ 
+							{% for item in labels1 %} 
+								"{{ item }}",
+							{% endfor %}
+							], 
+						datasets : [{
+							fillColor: 'rgba(255, 255, 255, 0.1)',
+							strokeColor: 'rgba(0, 0, 0, 1)',
+							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							data : [
+							{% for item in values2 %} 
+								{{ item }},
+							{% endfor %}
+							],
+							label: "Plant 2",
+							// fill: false,
+							// borderColor: 'rgba(100, 0, 17, 0.1)'
+						} , 	
+					]
+				}
+				var options = {
+					title : {
+						display:true, 
+						test:'test', 
+						position: 'top'
+
+					}
+				};
+				var chart = document.getElementById("chart").getContext("2d")
+				new Chart(chart).Line(bar, {
+					scaleStartValue: 0,
+					scaleShowVerticalLines: true, 
+					scaleShowGridLines: true,
+					bezierCurve: false, 
+					scaleShowLabels: true, 
+					options: options,
 					},
 				);
 			}
 			</script>
+		<!-- PLANT 3 -->
+			<script> 
+				function graphy3() { 
+					var bar = { 
+						labels : [ 
+							{% for item in labels1 %} 
+								"{{ item }}",
+							{% endfor %}
+							], 
+						datasets : [{
+							fillColor: 'rgba(255, 255, 255, 0.1)',
+							strokeColor: 'rgba(0, 0, 0, 1)',
+							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							data : [
+							{% for item in values3 %} 
+								{{ item }},
+							{% endfor %}
+							],
+							label: "Plant 2",
+							// fill: false,
+							// borderColor: 'rgba(100, 0, 17, 0.1)'
+						} , 	
+					]
+				}
+				var options = {
+					title : {
+						display:true, 
+						test:'test', 
+						position: 'top'
+					}
+				};
+				var chart = document.getElementById("chart").getContext("2d")
+				new Chart(chart).Line(bar, {
+					scaleStartValue: 0,
+					scaleShowVerticalLines: true, 
+					scaleShowGridLines: true,
+					bezierCurve: false, 
+					scaleShowLabels: true, 
+					options: options,
+					},
+				);
+			}
+			</script>
+		<!-- WATER LEVEL  -->
+		<center>
+			<h2> Water Level </h2>
+			<button onclick = "water_level()">Display Water Level</button>
 		</center>
-		<hr>{% block content %}{% endblock %}
+		<center>
+			<canvas id="waterlevel" width="600" height="400"></canvas>
+		</center>	
+			<script> 
+				 function water_level() { 
+					var bar = { 
+						labels : [ 
+							{% for item in labels1 %} 
+								"{{ item }}",
+							{% endfor %}
+							], 
+						datasets : [{
+							fillColor: 'rgba(255, 255, 255, 0.1)',
+							strokeColor: 'rgba(0, 0, 0, 1)',
+							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							data : [
+							{% for item in waterlevel %}
+								{{ item }}, 
+							{% endfor %}
+							], 
+							label: "Plant 1",
+							// fill: false,
+							// borderColor: 'rgba(212, 17, 17, 0.1)',
+						},
+					]
+				}
+				var options = {
+					title : {
+						display:true, 
+						test:'test', 
+						position: 'top'
+					}
+				};
+				var chart = document.getElementById("waterlevel").getContext("2d")
+				new Chart(chart).Line(bar, {
+					scaleStartValue: 0,
+					scaleShowVerticalLines: true, 
+					scaleShowGridLines: true,
+					bezierCurve: false, 
+					scaleShowLabels: true, 
+					options: options,
+					},
+				);
+			}
+		</script>
+		<!-- AIR TEMPERATURE -->
+		<center>
+			<h2> Air Temperature </h2>
+			<button onclick = "air_temp()">Display Air Temperature</button>
+		</center>
+		<center>
+			<canvas id="air_temp" width="600" height="400"></canvas>
+		</center>
+			<script> 
+				 function air_temp() { 
+					var bar = { 
+						labels : [ 
+							{% for item in labels1 %} 
+								"{{ item }}",
+							{% endfor %}
+							], 
+						datasets : [{
+							fillColor: 'rgba(255, 255, 255, 0.1)',
+							strokeColor: 'rgba(0, 0, 0, 1)',
+							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							data : [
+							{% for item in airtemperature %}
+								{{ item }}, 
+							{% endfor %}
+							], 
+							label: "Plant 1",
+							// fill: false,
+							// borderColor: 'rgba(212, 17, 17, 0.1)',
+						},
+					]
+				}
+				var options = {
+					title : {
+						display:true, 
+						test:'test', 
+						position: 'top'
+					}
+				};
+				var chart = document.getElementById("air_temp").getContext("2d")
+				new Chart(chart).Line(bar, {
+					scaleStartValue: 0,
+					scaleShowVerticalLines: true, 
+					scaleShowGridLines: true,
+					bezierCurve: false, 
+					scaleShowLabels: true, 
+					options: options,
+					},
+				);
+			}
+		</script>
+		<!-- AIR HUMIDITY -->
+		<center>
+			<h2> Air Humidity  </h2>
+			<button onclick = "air_humid()">Display Air Humidity</button>
+		</center>
+		<center>
+			<canvas id="air_humid" width="600" height="400"></canvas>
+		</center>	
+			<script> 
+				 function air_humid() { 
+					var bar = { 
+						labels : [ 
+							{% for item in labels1 %} 
+								"{{ item }}",
+							{% endfor %}
+							], 
+						datasets : [{
+							fillColor: 'rgba(255, 255, 255, 0.1)',
+							strokeColor: 'rgba(0, 0, 0, 1)',
+							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							data : [
+							{% for item in airhumidity %}
+								{{ item }}, 
+							{% endfor %}
+							], 
+							label: "Plant 1",
+							// fill: false,
+							// borderColor: 'rgba(212, 17, 17, 0.1)',
+						},
+					]
+				}
+				var options = {
+					title : {
+						display:true, 
+						test:'test', 
+						position: 'top'
+					}
+				};
+				var chart = document.getElementById("air_humid").getContext("2d")
+				new Chart(chart).Line(bar, {
+					scaleStartValue: 0,
+					scaleShowVerticalLines: true, 
+					scaleShowGridLines: true,
+					bezierCurve: false, 
+					scaleShowLabels: true, 
+					options: options,
+					},
+				);
+			}
+		</script>
 		<center>
 			<!-- <button><a href = "/water/1">Water Plant 1</a></button>
 			<button> <a href = "/water/2">Water Plant 2</a></button>
@@ -101,6 +317,7 @@
 		<center>
 			<a href = "/mode/1"><button type = "button">Switch To Manual Watering Mode</button></a>
 			<a href = "/mode/0"><button type = "button">Switch To Automatic Watering Mode</button></a>
+			<h2> The monitoring system is currently in {{modestate}} mode </h2>
 		</center>
 	</body>
 </html>
