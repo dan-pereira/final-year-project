@@ -11,6 +11,7 @@ Turns on water pumps
 path='/home/pi/src/configs/'
 pins = [14,15,18]
 # GPIO setup
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pins, GPIO.OUT)
 GPIO.output(pins, GPIO.HIGH)
@@ -22,8 +23,8 @@ def water(pin,s):
     return
 
 def manWater(plantNo):
-    val = 0.3
-    pin = pins[plantNo]
+    val = 0.2
+    pin = pins[int(plantNo)]
     print('pump',plantNo,'run for',val,'seconds')
     water(pin,val)
     return
