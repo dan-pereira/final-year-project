@@ -2,7 +2,8 @@
 import unittest
 from unittest.mock import Mock
 from unittest.mock import patch
-from src import databaseQuery as dq
+from src import database_query as dq
+# import database_query as dq
 
 
 class TestDatabaseQuery(unittest.TestCase):

@@ -2,7 +2,7 @@
 import json
 import requests
 import numpy as np
-from database_query import queryDB
+from .database_query import queryDB
 
 path = '/home/ubuntu/src/storage/'
 queryString = 'SELECT moisture1,moisture2, moisture3 FROM mydb.sensor_val order by timer desc limit '
@@ -49,8 +49,7 @@ def reverseDiscrete(state):
     return int(result)
 
 
-def getCurrentState():
-    smoothing = 5  # how many states to avg
+def getCurrentState(smoothing = 5):
     allStates = queryDB(queryString + str(smoothing))
     results = []
     # print(allStates)

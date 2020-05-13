@@ -2,16 +2,17 @@ import json
 import requests
 
 path = '../storage/'
+piEndpoint = 'http://localhost:5000/'
 actualActions = [0.15,0.2,0.25,0.3,0.35,0.4,0.45]
 def waterPlant(plantNumber):
     '''
     will hit endpoint on raspi to water
     '''
     plantNo = {'plantNo' : plantNumber}
-    response = requests.post('http://localhost:5000/water_plant',data = plantNo)
+    response = requests.post(piEndpoint+'water_plant',data = plantNo)
     print(response.content)
     print('-------plant watered!!---------')
-    return('hit')
+    return(response.content)
 
 def readConfig():
     fileName = path+'defaultConfig.json'#'q_learn_config.json'
@@ -24,7 +25,7 @@ def writeConfig(data):
     fileName = path+'defaultConfig.json'#'q_learn_config.json'
     with open(fileName, 'w') as configFile:
         json.dump(data, configFile, indent=2)
-    response = requests.post('http://localhost:5000/update_config', files={'file': open(fileName, 'rb')})
+    response = requests.post(piEndpoint+'update_config', files={'file': open(fileName, 'rb')})
     print(response)
     return
 
