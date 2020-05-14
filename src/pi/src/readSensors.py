@@ -3,8 +3,6 @@ from gpiozero import MCP3008
 import Adafruit_DHT
 import os
 import glob
-import time
-import sys
 
 
 def mcp3008(values):
@@ -32,7 +30,6 @@ def DHT11(values):
     sensor = Adafruit_DHT.DHT11
     pin = 4  # GPIO_NUM
     humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
-    value = str(humidity) + '% ' + str(temperature) + '°C'
     values['airTemp'] = temperature
     values['humidity'] = humidity
     print('DHT,fin')
@@ -54,8 +51,6 @@ def DS18B20(values):
 
 
 def readSensors():
-    sensors = [DHT11, mcp3008, DS18B20]
-
     values = {}
     DHT11(values)
     mcp3008(values)

@@ -2,7 +2,7 @@
 import json
 import requests
 import numpy as np
-from .database_query import queryDB
+from database_query import queryDB
 
 path = '/home/ubuntu/src/storage/'
 queryString = 'SELECT moisture1,moisture2, moisture3 FROM mydb.sensor_val order by timer desc limit '
@@ -31,9 +31,8 @@ tableStates = (envMax - envMin) / granularity
 actions = [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45]
 
 
-def crate_q_table(i):
-    q_table = np.random.uniform(low=float(-2), high=float(0),
-                                size=(granularity + [len(actions)]))  # initialize with negative rewards
+def create_q_table(i):
+    q_table = np.random.uniform(low=float(-2), high=float(0), size=(granularity + [len(actions)]))
     np.save(path + 'q_table' + str(i), q_table)
     return
 
@@ -49,7 +48,7 @@ def reverseDiscrete(state):
     return int(result)
 
 
-def getCurrentState(smoothing = 5):
+def getCurrentState(smoothing=5):
     allStates = queryDB(queryString + str(smoothing))
     results = []
     # print(allStates)
@@ -73,7 +72,7 @@ def getReward(state, lastState, goal):
 def calculate(q_table, i, config, currentState):
     sensor = 'mcp0' + str(i)
     lastState = config['last_state'][sensor]
-    print('lastState', lastState, '->', currentState)
+    print('lastState', lastState, '->', reverseDiscrete(currentState))
     lastState = getDiscreteState(lastState)
     goal = config['goal'][sensor]
     print('goal', goal)
@@ -81,7 +80,6 @@ def calculate(q_table, i, config, currentState):
 
     actionTaken = config['controller'][str(i)]
 
-    print(actionTaken)
     print('actionTaken', str(actionTaken) + 's')
     actionTaken = actions.index(actionTaken)
 
@@ -139,4 +137,4 @@ if __name__ == '__main__':
     with open(fileName, 'w') as configFile:
         json.dump(config, configFile, indent=2)
     response = requests.post('http://localhost:5000/update_config', files={'file': open(fileName, 'rb')})
-    print(response)
+    print(response.content)

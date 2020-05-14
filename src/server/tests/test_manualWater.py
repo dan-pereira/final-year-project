@@ -13,7 +13,7 @@ class TestManualWater(unittest.TestCase):
             i = 2
             mw.waterPlant(i)
             result = mw.piEndpoint+'water_plant'
-            dic = {'plantNo':i}
+            dic = {'plantNo': i}
             mock.assert_called()
             print(mock.call_args_list)
             mock.assert_called_with(result,data = dic)
@@ -52,20 +52,6 @@ class TestManualWater(unittest.TestCase):
             print(type(testDic), testDic)
             self.assertEqual(testDic, r)
         return
-
-    # def test_manAutoSelect(self):
-    #     # mw.readConfig = Mock()
-    #     with patch('__main__.readConfig') as mock:
-    #         testDic = {'manual_mode': 0}
-    #         mock.return_value = testDic
-    #         mw.writeConfig = Mock()
-    #         mw.manAutoSelect(1)
-    #         r = mw.writeConfig.call_args[0][0]
-    #         testDic['manual_mode'] = 1
-    #         print(type(r), r)
-    #         print(type(testDic), testDic)
-    #         self.assertEqual(testDic, r)
-    #     return
 
 
 if __name__ == '__main__':
