@@ -1,0 +1,42 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "get sensor values",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "SensorValuesIntent",
+          "slots": [],
+          "samples": [
+            "read the sensor values",
+            "hello"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "WaterIntent",
+          "slots": [],
+          "samples": [
+            "water the plants"
+          ]
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "10"
+}
