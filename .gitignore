@@ -1,5 +1,7 @@
 # Add files names (and patterns) you want git to ignore here.
 
+# Ignore python cache files.
+*__pycache__/
 # Ignore java .class files.
 *.class
 

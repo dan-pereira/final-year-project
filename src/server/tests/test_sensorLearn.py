@@ -1,26 +1,20 @@
 #!/usr/bin/python3
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock, patch
+
+MockQDB = MagicMock()
+
+modules = {
+    "database_query": MockQDB
+    }
+patcher = patch.dict("sys.modules", modules)
+patcher.start()
+
+
 from src import sensorLearn as sl
 
-# import sensorLearn as sl
 
 storagePath = "storage/"
-'''
-manualWater
-printQtable
-'''
-
-
-'''
-class emp(self):
-def ms (self month):
-    res = req.get('')
-    if res.ok:
-        return res.txt
-    else:
-        return 'bad res'
-'''
 
 class TestSensorLearn(unittest.TestCase):
 
@@ -54,23 +48,7 @@ class TestSensorLearn(unittest.TestCase):
         return
 
 
-    def test_calculate(self):
-        pass
 
-    '''
-    def test_getState(self):
-        res = sl.getCurrentState()
-        self.assertEqual(3, len(res))
-        for val in res:
-            self.assertIs(int, type(val))
-        return
-        
-
-    def test_databaseQuery(self):
-        res = sl.queryDB('SELECT moisture1,moisture2, moisture3 FROM mydb.sensor_val order by timer desc limit 5')
-        self.assertEqual(5, len(res))
-        return
-    '''
 
 def runTest():
     print('runtTest')

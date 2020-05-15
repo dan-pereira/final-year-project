@@ -11,7 +11,8 @@ def mcp3008(values):
     channel 7 is water level
     '''
     for i in range(8):
-        value = MCP3008(channel=i).value
+        setting = MCP3008(channel=i)
+        value = setting.value
         name = 'mcp0' + str(i)
 
         if i < 7:
@@ -38,7 +39,7 @@ def DHT11(values):
 
 def DS18B20(values):
     os.system('modprobe w1-gpio')
-    os.system('modprobe w1-therm')  # these allow the prog to read sensor try without and reboot
+    os.system('modprobe w1-therm')
     device_folder = glob.glob('/sys/bus/w1/devices/28*')[0]
     device_file = device_folder + '/w1_slave'
     with open(device_file, 'r') as f:

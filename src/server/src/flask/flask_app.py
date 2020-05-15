@@ -3,7 +3,7 @@ import sys
 from flask import Flask, render_template, redirect
 
 sys.path.append('./')
-from database_query import *
+from database_query import formattedQDB
 from manualWater import waterPlant, manAutoSelect, readConfig
 
 app = Flask(__name__)
@@ -57,7 +57,7 @@ def dash():
     return render_template('dashboard.html', title='Dashboard' ''', var = var''')
 
 
-@app.route('/water/<plant_number>')
+@app.route('/water/<int:plant_number>')
 def water(plant_number):
     print('----++', plant_number)
     response = waterPlant(plant_number)
@@ -65,7 +65,7 @@ def water(plant_number):
     return redirect('/graphs')
 
 
-@app.route('/mode/<val>')
+@app.route('/mode/<int:val>')
 def modeselect(val):
     manAutoSelect(val)
     print('mode ', val, ' selected')

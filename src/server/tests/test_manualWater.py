@@ -2,7 +2,6 @@
 import unittest
 from unittest.mock import Mock, patch, mock_open, call
 from src import manualWater as mw
-# import manualWater as mw
 
 
 class TestManualWater(unittest.TestCase):
@@ -46,7 +45,7 @@ class TestManualWater(unittest.TestCase):
             readC.return_value = testDic
 
             mw.manAutoSelect(1)
-            r = mw.writeConfig.call_args[0][0]
+            r = writeC.call_args[0][0]
             testDic['manual_mode'] = 1
             print(type(r), r)
             print(type(testDic), testDic)
