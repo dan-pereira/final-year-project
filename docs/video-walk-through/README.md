@@ -2,6 +2,6 @@
 
 5 minute video walkthrough. 
 
-<!--
-The video walk through is [here](FIX-ME). **LINK TO GOOGLE DRIVE**
--->
+
+The video walk through is [https://drive.google.com/open?id=1Uq2372E0h2hHYOubBnmu1e62lkSwTcvB]. **LINK TO GOOGLE DRIVE**
+
