@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import sys
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, abort, url_for
 
 sys.path.append('./')
 from database_query import formattedQDB
@@ -59,7 +59,10 @@ def dash():
 
 @app.route('/water/<int:plant_number>')
 def water(plant_number):
-    print('----++', plant_number)
+    if plant_number<1 or plant_number>3:
+        abort(404)
+    plant_number -= 1
+    print('----++', str(plant_number))
     response = waterPlant(plant_number)
     print(response)
     return redirect('/graphs')
@@ -78,4 +81,4 @@ def invalidroute(e):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080)

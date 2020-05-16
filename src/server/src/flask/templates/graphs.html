@@ -9,16 +9,14 @@
 				top: 0px;
 			}
 		</style>
-	</head> 
-	<body> 
+	</head>
+	<body>
 		<!-- chart library -->
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script> 
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
 		<!-- <script src = static/chart.js></script> -->
-		<div class = menubar> 
-			IOT Smart Garden: <a href="/login">Home</a> <a></a>
-		</div>
 		<!-- PLANT 1 -->
 		<center>
+            <img src="{{ url_for('static', filename = '1logo.png') }}" align="middle" style="width:500px;height:600px;"/>
 			<h2> Moisture Values </h2>
 			<button onclick = "graphy()">Display Moisture Values - Plant 1</button>
 			<button onclick = "graphy2()">Display Moisture Values - Plant 2</button>
@@ -27,23 +25,23 @@
 			<center>
 				<canvas id="chart" width="600" height="400"></canvas>
 			</center>
-			<script> 
-				 function graphy() { 
-					var bar = { 
-						labels : [ 
-							{% for item in labels1 %} 
+			<script>
+				 function graphy() {
+					var bar = {
+						labels : [
+							{% for item in labels1 %}
 								"{{ item }}",
 							{% endfor %}
-							], 
+							],
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							pointColor: 'rgba(255, 255, 255, 0.1)',
 							data : [
 							{% for item in values1 %}
-								{{ item }}, 
+								{{ item }},
 							{% endfor %}
-							], 
+							],
 							label: "Plant 1",
 							// fill: false,
 							// borderColor: 'rgba(212, 17, 17, 0.1)',
@@ -52,51 +50,51 @@
 				}
 				var options = {
 					title : {
-						display:true, 
-						test:'test', 
+						display:true,
+						test:'test',
 						position: 'top'
 					}
 				};
 				var chart = document.getElementById("chart").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
-					scaleShowVerticalLines: true, 
+					scaleShowVerticalLines: true,
 					scaleShowGridLines: true,
-					bezierCurve: false, 
-					scaleShowLabels: true, 
+					bezierCurve: false,
+					scaleShowLabels: true,
 					options: options,
 					},
 				);
 			}
 		</script>
 		<!-- PLANT 2 -->
-			<script> 
-				 function graphy2() { 
-					var bar = { 
-						labels : [ 
-							{% for item in labels1 %} 
+			<script>
+				 function graphy2() {
+					var bar = {
+						labels : [
+							{% for item in labels1 %}
 								"{{ item }}",
 							{% endfor %}
-							], 
+							],
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							pointColor: 'rgba(255, 255, 255, 0.1)',
 							data : [
-							{% for item in values2 %} 
+							{% for item in values2 %}
 								{{ item }},
 							{% endfor %}
 							],
 							label: "Plant 2",
 							// fill: false,
 							// borderColor: 'rgba(100, 0, 17, 0.1)'
-						} , 	
+						} ,
 					]
 				}
 				var options = {
 					title : {
-						display:true, 
-						test:'test', 
+						display:true,
+						test:'test',
 						position: 'top'
 
 					}
@@ -104,53 +102,53 @@
 				var chart = document.getElementById("chart").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
-					scaleShowVerticalLines: true, 
+					scaleShowVerticalLines: true,
 					scaleShowGridLines: true,
-					bezierCurve: false, 
-					scaleShowLabels: true, 
+					bezierCurve: false,
+					scaleShowLabels: true,
 					options: options,
 					},
 				);
 			}
 			</script>
 		<!-- PLANT 3 -->
-			<script> 
-				function graphy3() { 
-					var bar = { 
-						labels : [ 
-							{% for item in labels1 %} 
+			<script>
+				function graphy3() {
+					var bar = {
+						labels : [
+							{% for item in labels1 %}
 								"{{ item }}",
 							{% endfor %}
-							], 
+							],
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							pointColor: 'rgba(255, 255, 255, 0.1)',
 							data : [
-							{% for item in values3 %} 
+							{% for item in values3 %}
 								{{ item }},
 							{% endfor %}
 							],
 							label: "Plant 2",
 							// fill: false,
 							// borderColor: 'rgba(100, 0, 17, 0.1)'
-						} , 	
+						} ,
 					]
 				}
 				var options = {
 					title : {
-						display:true, 
-						test:'test', 
+						display:true,
+						test:'test',
 						position: 'top'
 					}
 				};
 				var chart = document.getElementById("chart").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
-					scaleShowVerticalLines: true, 
+					scaleShowVerticalLines: true,
 					scaleShowGridLines: true,
-					bezierCurve: false, 
-					scaleShowLabels: true, 
+					bezierCurve: false,
+					scaleShowLabels: true,
 					options: options,
 					},
 				);
@@ -163,24 +161,24 @@
 		</center>
 		<center>
 			<canvas id="waterlevel" width="600" height="400"></canvas>
-		</center>	
-			<script> 
-				 function water_level() { 
-					var bar = { 
-						labels : [ 
-							{% for item in labels1 %} 
+		</center>
+			<script>
+				 function water_level() {
+					var bar = {
+						labels : [
+							{% for item in labels1 %}
 								"{{ item }}",
 							{% endfor %}
-							], 
+							],
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							pointColor: 'rgba(255, 255, 255, 0.1)',
 							data : [
 							{% for item in waterlevel %}
-								{{ item }}, 
+								{{ item }},
 							{% endfor %}
-							], 
+							],
 							label: "Plant 1",
 							// fill: false,
 							// borderColor: 'rgba(212, 17, 17, 0.1)',
@@ -189,18 +187,18 @@
 				}
 				var options = {
 					title : {
-						display:true, 
-						test:'test', 
+						display:true,
+						test:'test',
 						position: 'top'
 					}
 				};
 				var chart = document.getElementById("waterlevel").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
-					scaleShowVerticalLines: true, 
+					scaleShowVerticalLines: true,
 					scaleShowGridLines: true,
-					bezierCurve: false, 
-					scaleShowLabels: true, 
+					bezierCurve: false,
+					scaleShowLabels: true,
 					options: options,
 					},
 				);
@@ -214,23 +212,23 @@
 		<center>
 			<canvas id="air_temp" width="600" height="400"></canvas>
 		</center>
-			<script> 
-				 function air_temp() { 
-					var bar = { 
-						labels : [ 
-							{% for item in labels1 %} 
+			<script>
+				 function air_temp() {
+					var bar = {
+						labels : [
+							{% for item in labels1 %}
 								"{{ item }}",
 							{% endfor %}
-							], 
+							],
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							pointColor: 'rgba(255, 255, 255, 0.1)',
 							data : [
 							{% for item in airtemperature %}
-								{{ item }}, 
+								{{ item }},
 							{% endfor %}
-							], 
+							],
 							label: "Plant 1",
 							// fill: false,
 							// borderColor: 'rgba(212, 17, 17, 0.1)',
@@ -239,18 +237,18 @@
 				}
 				var options = {
 					title : {
-						display:true, 
-						test:'test', 
+						display:true,
+						test:'test',
 						position: 'top'
 					}
 				};
 				var chart = document.getElementById("air_temp").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
-					scaleShowVerticalLines: true, 
+					scaleShowVerticalLines: true,
 					scaleShowGridLines: true,
-					bezierCurve: false, 
-					scaleShowLabels: true, 
+					bezierCurve: false,
+					scaleShowLabels: true,
 					options: options,
 					},
 				);
@@ -263,24 +261,24 @@
 		</center>
 		<center>
 			<canvas id="air_humid" width="600" height="400"></canvas>
-		</center>	
-			<script> 
-				 function air_humid() { 
-					var bar = { 
-						labels : [ 
-							{% for item in labels1 %} 
+		</center>
+			<script>
+				 function air_humid() {
+					var bar = {
+						labels : [
+							{% for item in labels1 %}
 								"{{ item }}",
 							{% endfor %}
-							], 
+							],
 						datasets : [{
 							fillColor: 'rgba(255, 255, 255, 0.1)',
 							strokeColor: 'rgba(0, 0, 0, 1)',
-							pointColor: 'rgba(255, 255, 255, 0.1)', 
+							pointColor: 'rgba(255, 255, 255, 0.1)',
 							data : [
 							{% for item in airhumidity %}
-								{{ item }}, 
+								{{ item }},
 							{% endfor %}
-							], 
+							],
 							label: "Plant 1",
 							// fill: false,
 							// borderColor: 'rgba(212, 17, 17, 0.1)',
@@ -289,18 +287,18 @@
 				}
 				var options = {
 					title : {
-						display:true, 
-						test:'test', 
+						display:true,
+						test:'test',
 						position: 'top'
 					}
 				};
 				var chart = document.getElementById("air_humid").getContext("2d")
 				new Chart(chart).Line(bar, {
 					scaleStartValue: 0,
-					scaleShowVerticalLines: true, 
+					scaleShowVerticalLines: true,
 					scaleShowGridLines: true,
-					bezierCurve: false, 
-					scaleShowLabels: true, 
+					bezierCurve: false,
+					scaleShowLabels: true,
 					options: options,
 					},
 				);

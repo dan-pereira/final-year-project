@@ -25,7 +25,7 @@ def water(pin, s):
 
 
 def manWater(plantNo):
-    val = 0.2
+    val = 1.2
     pin = pins[int(plantNo)]
     print('pump', plantNo, 'run for', val, 'seconds')
     water(pin, val)
